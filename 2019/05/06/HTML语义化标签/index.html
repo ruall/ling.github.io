@@ -136,6 +136,7 @@ aside 、article 、hgroup, h1, h2abbr （abbr标签表示缩写）blockquote, q
 <script>    
     document.body.addEventListener('click', function (e) {
         if (e.target.classList.contains('v-va')) {
+            window.location.reload();
             $('.v-va').hide();
             new Valine({
                 el: '#vcomment',
