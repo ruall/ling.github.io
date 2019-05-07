@@ -75,35 +75,6 @@ aside 、article 、hgroup, h1, h2abbr （abbr标签表示缩写）blockquote, q
             
         </div>
        <div id="vcomment"></div>
-<script>
-    new Valine({
-        el: '#vcomment',
-        notify: false,
-        verify: false,
-        appId: 'ntBRbxpY3s2Bf9JN30kumhsd-gzGzoHsz',
-        appKey: 'IsRTucvgGxXxKY6z6xxfwMy4',
-        placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
-        avatar: 'hide'
-    });
-    document.body.addEventListener('click', function(e) {
-        if (e.target.classList.contains('vsubmit')) {
-            const email = document.querySelector('input[type=email]');
-            const nick = document.querySelector('input[name=nick]');
-            if (!email.value || !nick.value) {
-                const str = `<div class="valert txt-center">
-                    <div class="vtext">请填写昵称和邮箱！</div>
-                </div>`;
-                const vmark = document.querySelector('.vmark');
-                vmark.innerHTML = str;
-                vmark.style.display = 'block';
-                setTimeout(function() {
-                    vmark.style.display = 'none';
-                    vmark.innerHTML = '';
-                }, 2500);
-            }
-        }
-    });
-</script>
     </div>
     
         <div class="side">
@@ -172,7 +143,35 @@ aside 、article 、hgroup, h1, h2abbr （abbr标签表示缩写）blockquote, q
     </div>
 </div>
 
-
+<script>
+    new Valine({
+        el: '#vcomment',
+        notify: false,
+        verify: false,
+        appId: 'ntBRbxpY3s2Bf9JN30kumhsd-gzGzoHsz',
+        appKey: 'IsRTucvgGxXxKY6z6xxfwMy4',
+        placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+        avatar: 'hide'
+    });
+    // document.body.addEventListener('click', function (e) {
+    //     if (e.target.classList.contains('vsubmit')) {
+    //         const email = document.querySelector('input[type=email]');
+    //         const nick = document.querySelector('input[name=nick]');
+    //         if (!email.value || !nick.value) {
+    //             const str = `<div class="valert txt-center">
+    //                 <div class="vtext">请填写昵称和邮箱！</div>
+    //             </div>`;
+    //             const vmark = document.querySelector('.vmark');
+    //             vmark.innerHTML = str;
+    //             vmark.style.display = 'block';
+    //             setTimeout(function () {
+    //                 vmark.style.display = 'none';
+    //                 vmark.innerHTML = '';
+    //             }, 2500);
+    //         }
+    //     }
+    // });
+</script>
 
 
 </html>
