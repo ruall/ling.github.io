@@ -5,15 +5,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Javascript的奇淫技巧 - Ling</title>
+    <title>JavaScript 基础知识点 - Ling</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate">
     <meta name="keywords" content="Ling,"> 
-    <meta name="description" content="JavaScript中常用的一些方法，便于快捷开发，用最简洁的代码达到预期效果
-类型转换
-数组转字符串
-12var arr = [1,2,3,4,5,6];var str = arr+&#39;&#39;; //1,"> 
+    <meta name="description" content="JS 对于每位前端开发都是必备技能，下面是一些容易混淆的Js知识点总结，方便以后查阅复习
+JavaScript原始数据类型
+boolean
+null
+undefined
+number
+string
+,"> 
     <meta name="author" content="Ane"> 
     <link rel="alternative" href="atom.xml" title="Ling" type="application/atom+xml"> 
     <link rel="icon" href="/ling.github.io/img/favicon.png"> 
@@ -28,7 +32,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="icon-home image-icon" href="javascript:;" data-url="https://ruall.github.io/ling.github.io"></a>
     <div title="播放/暂停" class="icon-play"></div>
-    <h3 class="subtitle">Javascript的奇淫技巧</h3>
+    <h3 class="subtitle">JavaScript 基础知识点</h3>
     <div class="social">
         <!--<div class="like-icon">-->
             <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
@@ -46,16 +50,28 @@
     <div class="section">
         <div class="article">
     <div class="main">
-        <h1 class="title">Javascript的奇淫技巧</h1>
+        <h1 class="title">JavaScript 基础知识点</h1>
         <div class="stuff">
             <span>五月 06, 2019</span>
             
-  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ling.github.io/tags/JavaScript/">JavaScript</a></li></ul>
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ling.github.io/tags/JavaScript-类型-原型-ES5/">JavaScript,类型,原型,ES5</a></li></ul>
 
 
         </div>
         <div class="content markdown">
-            <p>JavaScript中常用的一些方法，便于快捷开发，用最简洁的代码达到预期效果</p>
+            <p>JS 对于每位前端开发都是必备技能，下面是一些容易混淆的Js知识点总结，方便以后查阅复习</p>
+<h4 id="JavaScript原始数据类型"><a href="#JavaScript原始数据类型" class="headerlink" title="JavaScript原始数据类型"></a>JavaScript原始数据类型</h4><ul>
+<li><code>boolean</code></li>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+<li><code>number</code></li>
+<li><code>string</code></li>
+<li><code>symbol</code></li>
+</ul>
+<p>原始类型存储的都是值，是没有方法可以调用的<code>undefinde.toString()</code>会报错<br>number类型1加上<code>&quot;&quot;</code>可以强转为string类型 （<code>1+&quot;&quot;=&gt;string</code>）</p>
+<h4 id="对象（Object）类型"><a href="#对象（Object）类型" class="headerlink" title="对象（Object）类型"></a>对象（Object）类型</h4><p>在JS中，除了原始类型，其他都是对象类型，对象类型和原始类型的不同之处在于原始类型存的是值，而对象类型存的是路径（指向值的指针）<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">person</span>) </span>&#123;</span><br><span class="line">    person.age = <span class="number">26</span></span><br><span class="line">    person = &#123;</span><br><span class="line">        name: <span class="string">'yyy'</span>,</span><br><span class="line">        age: <span class="number">30</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> person</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = &#123;</span><br><span class="line">    name: <span class="string">'lhj'</span>,</span><br><span class="line">    age: <span class="string">'24'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> p2 = test(p1)</span><br><span class="line"><span class="built_in">console</span>.log(p1) <span class="comment">// &#123;name:'lhj',age:'26'&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(p2) <span class="comment">// &#123;name:'yyy',age:'30'&#125;</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="typeof-和-instanceof"><a href="#typeof-和-instanceof" class="headerlink" title="typeof 和 instanceof"></a>typeof 和 instanceof</h4><p>typeof  对于原始类型，除了 ‘null’ 都可以显示正确类型<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="number">1</span> =&gt;number</span><br><span class="line"><span class="keyword">typeof</span> <span class="string">'1'</span> =&gt; string</span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span> =&gt; <span class="literal">undefined</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> =&gt; boolean</span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Symbol</span>() =&gt; symbol</span><br></pre></td></tr></table></figure></p>
+<p>typeof 对于对象类型，除了函数其他都会显示 ‘object’ ，typeof并不能准确判断变量是什么类型<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> [] =&gt; <span class="string">'object'</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125; =&gt; <span class="string">'object'</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">console</span>.log =&gt; <span class="string">'function'</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="类型转换"><a href="#类型转换" class="headerlink" title="类型转换"></a>类型转换</h4><ul>
 <li><p>数组转字符串</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>];</span><br><span class="line"><span class="keyword">var</span> str = arr+<span class="string">''</span>; <span class="comment">//1,2,3,4,5,6</span></span><br></pre></td></tr></table></figure>
@@ -95,7 +111,7 @@
     </div>
     
         <div class="side">
-            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#类型转换"><span class="toc-number">1.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象下面是否有此属性"><span class="toc-number">2.</span> <span class="toc-text">判断对象下面是否有此属性</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#JavaScript原始数据类型"><span class="toc-number">1.</span> <span class="toc-text">JavaScript原始数据类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#对象（Object）类型"><span class="toc-number">2.</span> <span class="toc-text">对象（Object）类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#typeof-和-instanceof"><span class="toc-number">3.</span> <span class="toc-text">typeof 和 instanceof</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#类型转换"><span class="toc-number">4.</span> <span class="toc-text">类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#判断对象下面是否有此属性"><span class="toc-number">5.</span> <span class="toc-text">判断对象下面是否有此属性</span></a></li></ol>
         </div>
     
 </div>
