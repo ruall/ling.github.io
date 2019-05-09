@@ -313,3 +313,36 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   .article .side {display:none}
   .comment .gt-btn-public .gt-btn-text:after{content:"";}
 }
+
+.v-va {
+  z-index: 1;
+  position: relative;
+  font-size: inherit;
+  font-family: inherit;
+  color: white;
+  padding: 0.5em 1em;
+  outline: none;
+  border: none;
+  background-color: hsl(246, 41%, 21%);
+  overflow: hidden;
+}
+
+.v-va::after {
+  content: '';
+  z-index: -1;
+  background-color: hsla(0, 0%, 100%, 0.2);
+  position: absolute;
+  top: -50%;
+  bottom: -50%;
+  width: 1.25em;
+  transform: translateX(-525%) rotate(35deg);
+}
+
+.v-va:hover {
+  cursor: pointer;
+}
+
+.v-va:hover::after {
+  transition: transform 0.45s ease-in-out;
+  transform: translateX(200%) rotate(35deg);
+}
