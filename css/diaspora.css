@@ -320,7 +320,6 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   font-size: inherit;
   font-family: inherit;
   color: white;
-  padding: 0.5em 1em;
   outline: none;
   border: none;
   background-color: hsl(246, 41%, 21%);
@@ -335,7 +334,7 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   top: -50%;
   bottom: -50%;
   width: 1.25em;
-  transform: translateX(-525%) rotate(35deg);
+  transform: translateX(-800%) rotate(35deg);
 }
 
 .v-va:hover {
@@ -344,5 +343,5 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
 
 .v-va:hover::after {
   transition: transform 0.45s ease-in-out;
-  transform: translateX(200%) rotate(35deg);
+  transform: translateX(100%) rotate(35deg);
 }
