@@ -343,5 +343,5 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
 
 .v-va:hover::after {
   transition: transform 0.45s ease-in-out;
-  transform: translateX(20%) rotate(35deg);
+  transform: translateX(500%) rotate(35deg);
 }
