@@ -319,10 +319,9 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   position: relative;
   font-size: inherit;
   font-family: inherit;
-  color: white;
+  color: #666;
   outline: none;
-  border: none;
-  background-color: hsl(246, 41%, 21%);
+  background-color: hsl(0, 0%, 100%);
   overflow: hidden;
 }
 
