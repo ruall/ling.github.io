@@ -321,14 +321,17 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   font-family: inherit;
   color: #666;
   outline: none;
-  background-color: hsl(0, 0%, 100%);
+  border: none;
+  border-radius:3px;
+  background-color: #dedede54;
   overflow: hidden;
+  box-shadow: 0 0 20px rgba(204, 204, 204, 0.76)
 }
 
 .v-va::after {
   content: '';
   z-index: -1;
-  background-color: hsla(0, 0%, 100%, 0.2);
+  background-color: #fff;
   position: absolute;
   top: -50%;
   bottom: -50%;
