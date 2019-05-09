@@ -334,7 +334,7 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
   top: -50%;
   bottom: -50%;
   width: 1.25em;
-  transform: translateX(-800%) rotate(35deg);
+  transform: translateX(-900%) rotate(35deg);
 }
 
 .v-va:hover {
@@ -343,5 +343,5 @@ pre .keyword,pre .javascript .function {color:#cc99cc;}
 
 .v-va:hover::after {
   transition: transform 0.45s ease-in-out;
-  transform: translateX(100%) rotate(35deg);
+  transform: translateX(20%) rotate(35deg);
 }
