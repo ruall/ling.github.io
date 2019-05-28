@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang class="loading">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>H5软键盘兼容方案 - Ling</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate">
+    <meta name="keywords" content="Ling,"> 
+    <meta name="description" content="最近一段时间在做 H5 聊天项目，踩过其中一大坑：输入框获取焦点，软键盘弹起，要求输入框吸附（或顶）在输入法框上。需求很明确，看似很简单，其实不然。从实验过一些机型上看，发现主要存在以下问题：
+
+在,"> 
+    <meta name="author" content="Ane"> 
+    <link rel="alternative" href="atom.xml" title="Ling" type="application/atom+xml"> 
+    <link rel="icon" href="/ruall.github.io/img/favicon.png"> 
+    <link rel="stylesheet" href="/ruall.github.io/css/diaspora.css">
+</head>
+</html>
+<body class="loading">
+    <span id="config-title" style="display:none">Ling</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://ruall.github.io/ruall.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">H5软键盘兼容方案</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">H5软键盘兼容方案</h1>
+        <div class="stuff">
+            <span>五月 28, 2019</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ruall.github.io/tags/H5/">H5</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ruall.github.io/tags/软键盘兼容/">软键盘兼容</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <p>最近一段时间在做 H5 聊天项目，踩过其中一大坑：输入框获取焦点，软键盘弹起，要求输入框吸附（或顶）在输入法框上。需求很明确，看似很简单，其实不然。从实验过一些机型上看，发现主要存在以下问题：</p>
+<ul>
+<li>在 <code>Android</code> 和 <code>IOS</code> 上，获知软键盘弹起和收起状态存在差异，且页面 webview 表现不同。</li>
+<li>在 <code>IOS12</code> 上，微信版本 <code>v6.7.4</code> 及以上，输入框获取焦点，键盘弹起，页面（webview）整体往上滚动，当键盘收起后，不回到原位，导致键盘原来所在位置是空白的。</li>
+<li>在 <code>IOS</code> 上，使用第三方输入法，高度计算存在偏差，导致在有些输入法弹起，将输入框挡住一部分。</li>
+<li>在有些浏览器上使用一些操作技巧，还是存在输入框被输入法遮挡。</li>
+</ul>
+<hr>
+<h4 id="获知软键盘弹起和收起状态"><a href="#获知软键盘弹起和收起状态" class="headerlink" title="获知软键盘弹起和收起状态"></a>获知软键盘弹起和收起状态</h4><hr>
+<p>获知软键盘的弹起还是收起状态很重要，后面的兼容处理都要以此为前提。然而， H5 并没有直接监听软键盘的原生事件，只能通过软键盘弹起或收起，引发页面其他方面的表现间接监听，曲线救国。并且，在 <code>IOS</code> 和 <code>Android</code> 上的表现不尽相同。</p>
+<h4 id="IOS-软键盘弹起表现"><a href="#IOS-软键盘弹起表现" class="headerlink" title="IOS 软键盘弹起表现"></a>IOS 软键盘弹起表现</h4><hr>
+<p>在 <code>IOS</code> 上，输入框（ input、 textarea 或 富文本）获取焦点，键盘弹起，页面（ webview）并没有被压缩，或者说高度（ height）没有改变，只是页面（ webview）整体往上滚了，且最大滚动高度（ scrollTop）为软键盘高度。</p>
+<h4 id="Android-软键盘弹起表现"><a href="#Android-软键盘弹起表现" class="headerlink" title="Android 软键盘弹起表现"></a>Android 软键盘弹起表现</h4><hr>
+<p>同样，在 <code>Android</code> 上，输入框获取焦点，键盘弹起，但是页面（ webview）高度会发生改变，一般来说，高度为可视区高度（原高度减去软键盘高度），除了因为页面内容被撑开可以产生滚动， webview 本身不能滚动。</p>
+<h4 id="IOS-软键盘收起表现"><a href="#IOS-软键盘收起表现" class="headerlink" title="IOS 软键盘收起表现"></a>IOS 软键盘收起表现</h4><hr>
+<p>触发软键盘上的“收起”按钮键盘或者输入框以外的页面区域时，输入框失去焦点，软键盘收起。</p>
+<h4 id="Android-软键盘收起表现"><a href="#Android-软键盘收起表现" class="headerlink" title="Android 软键盘收起表现"></a>Android 软键盘收起表现</h4><hr>
+<p>触发输入框以外的区域时，输入框失去焦点，软键盘收起。但是，触发键盘上的收起按钮键盘时，输入框并不会失去焦点，同样软键盘收起。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/btsCOHx9LANEYdL1DjerrrL4VtM8ibpMVAbVq7JpkTJ9TMhuB7JUo20OocHmIAT3lVkabJ57zsicpG3iaAic0jpuAg/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></p>
+<h4 id="监听软键盘弹起和收起"><a href="#监听软键盘弹起和收起" class="headerlink" title="监听软键盘弹起和收起"></a>监听软键盘弹起和收起</h4><hr>
+<p>综合上面键盘弹起和收起在 IOS 和 Android 上的不同表现，我们可以分开进行如下处理来监听软键盘的弹起和收起：</p>
+<ul>
+<li>在 IOS 上，监听输入框的 focus 事件来获知软键盘弹起，监听输入框的 blur 事件获知软键盘收起。</li>
+<li>在 Android 上，监听 webview 高度会变化，高度变小获知软键盘弹起，否则软键盘收起。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断设备类型</span></span><br><span class="line"><span class="keyword">var</span> judgeDeviceType = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> ua = <span class="built_in">window</span>.navigator.userAgent.toLocaleLowerCase();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> isIOS = <span class="regexp">/iphone|ipad|ipod/</span>.test(ua);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> isAndroid = <span class="regexp">/android/</span>.test(ua);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        isIOS: isIOS,</span><br><span class="line">        isAndroid: isAndroid</span><br><span class="line">    &#125;</span><br><span class="line">&#125; ()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听输入框的软键盘弹起和收起事件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">listenKeybord</span>(<span class="params">$input</span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(judgeDeviceType.isIOS)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// IOS 键盘弹起：IOS 和 Android 输入框获取焦点键盘弹起</span></span><br><span class="line">        $input.addEventListener(<span class="string">'focus'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'IOS 键盘弹起啦！'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// IOS 键盘弹起后操作</span></span><br><span class="line">        &#125;,<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// IOS 键盘收起：IOS 点击输入框以外区域或点击收起按钮，输入框都会失去焦点，键盘会收起，</span></span><br><span class="line">        $input.addEventListener(<span class="string">'blur'</span>,()= &gt;&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'IOS 键盘收起啦！'</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// IOS 键盘收起后操作</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Andriod 键盘收起：Andriod 键盘弹起或收起页面高度会发生变化，以此为依据获知键盘收起</span></span><br><span class="line">    <span class="keyword">if</span>(judgeDeviceType.isAndroid)&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> originHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">var</span> resizeHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(originHeight &lt; resizeHeight)&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'Android 键盘收起啦！'</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Android 键盘收起后操作</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'Android 键盘弹起啦！'</span>);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Android 键盘弹起后操作</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            originHeight = resizeHeight;</span><br><span class="line"></span><br><span class="line">        &#125;,<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> $inputs = <span class="built_in">document</span>.querySelectorAll(<span class="string">'.input'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i =<span class="number">0</span>; i &lt; $inputs.length; i++)&#123;</span><br><span class="line">    listenKeybord($inputs[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="弹起软键盘始终让输入框滚动到可视区"><a href="#弹起软键盘始终让输入框滚动到可视区" class="headerlink" title="弹起软键盘始终让输入框滚动到可视区"></a>弹起软键盘始终让输入框滚动到可视区</h4><hr>
+<p>有时我们会做一个输入表单，有很多输入项，输入框获取焦点，弹起软键盘。当输入框位于页面下部位置时，在 IOS 上，会将 webview 整体往上滚一段距离，使得该获取焦点的输入框自动处于可视区，而在 Android 则不会这样，它只会改变页面高度，而不会去滚动到当前焦点元素到可视区。<br>由于上面已经实现监听 IOS 和 Android 键盘弹起和收起，在这里，只需在 Android 键盘弹起后，将焦点元素滚动（ scrollIntoView()）到可视区。查看效果，可以戳这里。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取到焦点元素滚动到可视区</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">activeElementScrollIntoView</span>(<span class="params">activeElement, delay</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> editable = activeElement.getAttribute(<span class="string">"contenteditable"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 输入框、textarea或富文本获取焦点后没有将该元素滚动到可视区</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (</span><br><span class="line">    activeElement.tagName == <span class="string">"INPUT"</span> ||</span><br><span class="line">    activeElement.tagName == <span class="string">"TEXTAREA"</span> ||</span><br><span class="line">    editable === <span class="string">""</span> ||</span><br><span class="line">    editable</span><br><span class="line">  ) &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      activeElement.scrollIntoView();</span><br><span class="line">    &#125;, delay);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// Android 键盘弹起后操作</span></span><br><span class="line">activeElementScrollIntoView($input, <span class="number">1000</span>);</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h4 id="唤起纯数字软键盘"><a href="#唤起纯数字软键盘" class="headerlink" title="唤起纯数字软键盘"></a>唤起纯数字软键盘</h4><hr>
+<p>上面的表单输入框有要求输入电话号码，类似这样就要弹出一个数字软键盘了，既然说到了软键盘兼容，在这里就安插一下。比较好的解决方案如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>请输入手机号<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"tel"</span> <span class="attr">novalidate</span>=<span class="string">"novalidate"</span> <span class="attr">pattern</span>=<span class="string">"[0-9]*"</span> <span class="attr">class</span>=<span class="string">"input"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>type=&quot;tel&quot;</code>， 是 <code>HTML5</code> 的一个属性，表示输入框类型为电话号码，在 <code>Android</code>和 <code>IOS</code> 上表现差不多，都会有数字键盘，但是也会有字母，略显多余。</li>
+<li><code>pattern=&quot;[0-9]&quot;</code>， pattern 用于验证表单输入的内容，通常 HTML5 的 type 属性，比如 email、 tel、 number、 data 类、 url 等，已经自带了简单的数据格式验证功能了，加上 pattern 后，前端部分的验证更加简单高效了。IOS 中，只有 [0-9]* 才可以调起九宫格数字键盘， \d 无效， Android 4.4 以下（包括 X5 内核），两者都调起数字键盘。</li>
+<li><code>novalidate=&quot;novalidate&quot;</code>， <code>novalidate</code> 属性规定当提交表单时不对其进行验证，由于 pattern 校验兼容性不好，可以不让其校验，只让其唤起纯数字键盘，校验工作由 js 去做。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/btsCOHx9LANEYdL1DjerrrL4VtM8ibpMVicLokgC2BXHNtzylxomakmSjpaF10TFoScaXF1niaJ1DCiaPvMHiaP7aibQ/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt></li>
+</ul>
+<h4 id="兼容-IOS12-V6-7-4"><a href="#兼容-IOS12-V6-7-4" class="headerlink" title="兼容 IOS12 + V6.7.4+"></a>兼容 IOS12 + V6.7.4+</h4><hr>
+<p>如果你在用 IOS12 和 V6.7.4+版本的微信浏览器打开上面表单输入的 demo ，就会惊奇的发现键盘收起后，原本被滚动顶起的页面并没有回到底部位置，导致原来键盘弹起的位置“空”了。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/btsCOHx9LANEYdL1DjerrrL4VtM8ibpMV7lCZwWVXrX1GkR2g0svlAW9O9J8E5KmRx4uoPn8JbaPR1SRfnibTtcw/640?wx_fmt=png&amp;wxfrom=5&amp;wx_lazy=1&amp;wx_co=1" alt><br>其实这是 Apple 在 IOS 的 bug，会出现在所有的 Xcode10 打包的 IOS12 的设备上。微信官方已给出解决方案，只需在软键盘收起后，将页面（ webview）滚回到窗口最底部位置（ clientHeight 位置）。修复后的上面表单输入 demo 可以戳这里</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'IOS 键盘收起啦！'</span>);</span><br><span class="line"><span class="comment">// IOS 键盘收起后操作</span></span><br><span class="line"><span class="comment">// 微信浏览器版本6.7.4+IOS12会出现键盘收起后，视图被顶上去了没有下来</span></span><br><span class="line"><span class="keyword">var</span> wechatInfo = <span class="built_in">window</span>.navigator.userAgent.match(<span class="regexp">/MicroMessenger\/([\d\.]+)/i</span>);</span><br><span class="line"><span class="keyword">if</span> (!wechatInfo) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> wechatVersion = wechatInfo[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">var</span> version = (navigator.appVersion).match(<span class="regexp">/OS (\d+)_(\d+)_?(\d+)?/</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (+wechatVersion.replace(<span class="regexp">/\./g</span>, <span class="string">''</span>) &gt;= <span class="number">674</span> &amp;&amp; +version[<span class="number">1</span>] &gt;= <span class="number">12</span>) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">window</span>.scrollTo(<span class="number">0</span>, <span class="built_in">Math</span>.max(<span class="built_in">document</span>.body.clientHeight, <span class="built_in">document</span>.documentElement.clientHeight));</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="兼容第三方输入法"><a href="#兼容第三方输入法" class="headerlink" title="兼容第三方输入法"></a>兼容第三方输入法</h4><hr>
+<p>上面说了那么多，其实已经把 H5 聊天输入框的坑填了一大半了，接下来就先看下聊天输入框的基本HTML结构<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"chat__content"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>一些聊天内容1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 省略几千行聊天内容 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input__content"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input"</span> <span class="attr">contenteditable</span>=<span class="string">"true"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span>&gt;</span>发送<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>样式<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 省略一些样式 */</span></span><br><span class="line"><span class="selector-class">.chat__content</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="built_in">calc</span>(100% - 40px);</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">overflow-y</span>: auto;</span><br><span class="line">  <span class="attribute">overflow-x</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.input__content</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">40px</span>;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* 省略一些样式 */</span></span><br></pre></td></tr></table></figure></p>
+<p>很简单，就是划分内容区和输入区，输入区是绝对定位，按照上面表单输入 demo 的做法，确实大部分 Android 浏览器是没问题的，但是测试在 IOS 上，UC 浏览器配合原生输入法和第三方输入法（比如搜狗输入法），输入框都会被完全挡住；QQ 浏览器或微信浏览器，配合第三方输入法，输入框会被遮住一半；百度浏览器配合第三方输入法输入框也会被完全遮住。<br><img src="https://wuwhs.github.io/gb/keyboard-compatible/keyboard-chat-input.png" alt><br>在 UC 浏览器上，软键盘弹起后，浏览器上面的标题栏高度就有个高度变小延时动态效果，这样导致 webview 往下滚了一点，底部输入框滚到了非可视区。<br>而对于第三方输入法，猜测本身是由于输入法面板弹起后高度计算有误，导致 webview 初始滚动定位有误。其实这两点都是 webview 滚动不到位造成的。可以让软键盘弹起后，让焦点元素再次滚到可视区，强迫 webview 滚到位。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">'Android 键盘弹起啦！'</span>);</span><br><span class="line"><span class="comment">// Android 键盘弹起后操作</span></span><br><span class="line">activeElementScrollIntoView($input, <span class="number">1000</span>);</span><br></pre></td></tr></table></figure></p>
+<h4 id="兼容-Android-小米浏览器的-Hack-方案"><a href="#兼容-Android-小米浏览器的-Hack-方案" class="headerlink" title="兼容 Android 小米浏览器的 Hack 方案"></a>兼容 Android 小米浏览器的 Hack 方案</h4><hr>
+<p>在 Android 的小米浏览器上，应用上面的方案，发现聊天输入框还是被遮挡得严严实实，scrollIntoView() 仍然纹丝不动。所以猜测，其实是滚到底了，软键盘弹起，页面实现高度大于可视区高度，这样只能在软键盘弹起后，强行增加页面高度，使输入框可以显示出来。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Andriod 键盘收起：Andriod 键盘弹起或收起页面高度会发生变化，以此为依据获知键盘收起</span></span><br><span class="line"><span class="keyword">if</span> (judgeDeviceType.isAndroid) &#123;</span><br><span class="line">  <span class="keyword">var</span> originHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> resizeHeight = <span class="built_in">document</span>.documentElement.clientHeight || <span class="built_in">document</span>.body.clientHeight;</span><br><span class="line">    <span class="keyword">if</span> (originHeight &lt; resizeHeight) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Android 键盘收起啦！'</span>);</span><br><span class="line">      <span class="comment">// Android 键盘收起后操作</span></span><br><span class="line">      <span class="comment">// 修复小米浏览器下，输入框依旧被输入法遮挡问题</span></span><br><span class="line">      <span class="keyword">if</span> (judgeDeviceType.isMiuiBrowser) &#123;</span><br><span class="line">        <span class="built_in">document</span>.body.style.marginBottom = <span class="string">'0px'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'Android 键盘弹起啦！'</span>);</span><br><span class="line">      <span class="comment">// Android 键盘弹起后操作</span></span><br><span class="line">      <span class="comment">// 修复小米浏览器下，输入框依旧被输入法遮挡问题</span></span><br><span class="line">      <span class="keyword">if</span> (judgeDeviceType.isMiuiBrowser) &#123;</span><br><span class="line">        <span class="built_in">document</span>.body.style.marginBottom = <span class="string">'40px'</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      activeElementScrollIntoView($input, <span class="number">1000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    originHeight = resizeHeight;</span><br><span class="line">  &#125;, <span class="literal">false</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><hr>
+<p>H5 端前路漫漫，坑很多，需要不断尝试。了解软键盘弹起页面在 IOS 和 Android 上的表现差异是前提，其次是将焦点元素滚动到可视区，同时要考虑到第三方输入法和某些浏览器上的差别。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="https://link.hhtjim.com/163/1346403636.mp3">
+            </audio>
+            
+        </div>
+        <div class="v-va">查看评论</div>
+        <div id="vcomment"></div>
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#获知软键盘弹起和收起状态"><span class="toc-number">1.</span> <span class="toc-text">获知软键盘弹起和收起状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IOS-软键盘弹起表现"><span class="toc-number">2.</span> <span class="toc-text">IOS 软键盘弹起表现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Android-软键盘弹起表现"><span class="toc-number">3.</span> <span class="toc-text">Android 软键盘弹起表现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IOS-软键盘收起表现"><span class="toc-number">4.</span> <span class="toc-text">IOS 软键盘收起表现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Android-软键盘收起表现"><span class="toc-number">5.</span> <span class="toc-text">Android 软键盘收起表现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#监听软键盘弹起和收起"><span class="toc-number">6.</span> <span class="toc-text">监听软键盘弹起和收起</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#弹起软键盘始终让输入框滚动到可视区"><span class="toc-number">7.</span> <span class="toc-text">弹起软键盘始终让输入框滚动到可视区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#唤起纯数字软键盘"><span class="toc-number">8.</span> <span class="toc-text">唤起纯数字软键盘</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容-IOS12-V6-7-4"><span class="toc-number">9.</span> <span class="toc-text">兼容 IOS12 + V6.7.4+</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容第三方输入法"><span class="toc-number">10.</span> <span class="toc-text">兼容第三方输入法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容-Android-小米浏览器的-Hack-方案"><span class="toc-number">11.</span> <span class="toc-text">兼容 Android 小米浏览器的 Hack 方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#总结"><span class="toc-number">12.</span> <span class="toc-text">总结</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
+<script src="/ruall.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/ruall.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/ruall.github.io/js/plugin.js"></script>
+<script src="/ruall.github.io/js/diaspora.js"></script>
+<script src="/ruall.github.io/js/av-min.js"></script>
+<script src="/ruall.github.io/js/Valine.min.js"></script>
+<link rel="stylesheet" href="/ruall.github.io/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/ruall.github.io/photoswipe/default-skin/default-skin.css">
+<script src="/ruall.github.io/photoswipe/photoswipe.min.js"></script>
+<script src="/ruall.github.io/photoswipe/photoswipe-ui-default.min.js"></script>
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>    
+    document.body.addEventListener('click', function (e) {
+        if (e.target.classList.contains('v-va')) {
+            $('.v-va').hide();
+            new Valine({
+                el: '#vcomment',
+                notify: false,
+                verify: false,
+                appId: 'ntBRbxpY3s2Bf9JN30kumhsd-gzGzoHsz',
+                appKey: 'IsRTucvgGxXxKY6z6xxfwMy4',
+                placeholder: 'ヾﾉ≧∀≦)o欢迎评论!',
+                avatar: 'hide',
+                path: window.location.pathname
+            });
+        }
+    });
+</script>
+</html>
