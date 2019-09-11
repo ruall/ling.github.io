@@ -5,12 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ling</title>
+    <title>Vue数组响应式 - Ling</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate">
     <meta name="keywords" content="Ling,"> 
-    
+    <meta name="description" content="可以实现数组响应式的方法
+arr.push(); //向数组中添加元素
+arr.pop(); //删除数组中最后一个元素
+arr.shift(); //删除数组中第一个元素
+arr.unshift(,"> 
     <meta name="author" content="Ane"> 
     <link rel="alternative" href="atom.xml" title="Ling" type="application/atom+xml"> 
     <link rel="icon" href="/ruall.github.io/img/favicon.png"> 
@@ -20,26 +24,68 @@
 <body class="loading">
     <span id="config-title" style="display:none">Ling</span>
     <div id="loader"></div>
-    <div id="single" class="page">
-    <div id="top">
-        <a class="icon-left image-icon" href="javascript:history.back()"></a>
-    </div>
-    <div class="section">
-        <div class="article">
-            <div class="main">
-                <div class="content">
-                
-                    <div class="set">
-  <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/ES6/">ES6</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/前端杂学/">前端杂学</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/TypeScript/">TypeScript</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/Vue/">Vue</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/H5/">H5</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/css/">css</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/css动画/">css动画</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/ruall.github.io/categories/vue/">vue</a><span class="category-list-count">1</span></li></ul>
-</div>
-
-                
-                </div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="icon-home image-icon" href="javascript:;" data-url="https://ruall.github.io/ruall.github.io"></a>
+    <div title="播放/暂停" class="icon-play"></div>
+    <h3 class="subtitle">Vue数组响应式</h3>
+    <div class="social">
+        <!--<div class="like-icon">-->
+            <!--<a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+        <!--</div>-->
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="icon-scan" href="javascript:;"></a>
             </div>
+            <div id="qr"></div>
         </div>
     </div>
+    <div class="scrollbar"></div>
 </div>
 
+    <div class="section">
+        <div class="article">
+    <div class="main">
+        <h1 class="title">Vue数组响应式</h1>
+        <div class="stuff">
+            <span>九月 11, 2019</span>
+            
+  <ul class="post-tags-list"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ruall.github.io/tags/Vue/">Vue</a></li><li class="post-tags-list-item"><a class="post-tags-list-link" href="/ruall.github.io/tags/数组/">数组</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h4 id="可以实现数组响应式的方法"><a href="#可以实现数组响应式的方法" class="headerlink" title="可以实现数组响应式的方法"></a>可以实现数组响应式的方法</h4><ul>
+<li>arr.push(); //向数组中添加元素</li>
+<li>arr.pop(); //删除数组中最后一个元素</li>
+<li>arr.shift(); //删除数组中第一个元素</li>
+<li>arr.unshift(); //向数组中最前面添加一个元素</li>
+<li>arr.splice(); //删除数组中元素/向数组中插入元素/修改数组中元素</li>
+<li>arr.sort(); //正序排列数组</li>
+<li>arr.reverse(); //倒序排列数组</li>
+</ul>
+<h4 id="不能实现数组响应式的方法"><a href="#不能实现数组响应式的方法" class="headerlink" title="不能实现数组响应式的方法"></a>不能实现数组响应式的方法</h4><ul>
+<li>arr[0] = ‘a’； //通过索引值修改数组中元素</li>
+</ul>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
+                <source type="audio/mpeg" src="https://link.hhtjim.com/163/502043537.mp3">
+            </audio>
+            
+        </div>
+        <div class="v-va">查看评论</div>
+        <div id="vcomment"></div>
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#可以实现数组响应式的方法"><span class="toc-number">1.</span> <span class="toc-text">可以实现数组响应式的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#不能实现数组响应式的方法"><span class="toc-number">2.</span> <span class="toc-text">不能实现数组响应式的方法</span></a></li></ol>
+        </div>
+    
+</div>
+    </div>
+</div>
 <script src="/ruall.github.io/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/ruall.github.io/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 <script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
 <script src="/ruall.github.io/js/plugin.js"></script>
